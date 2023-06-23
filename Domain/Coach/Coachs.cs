@@ -18,6 +18,6 @@ namespace Domain.Coach
   // public ICollection<DatesDrivigs> DatesDrivigs { get; set; }
   // public DatesDrivigs DatesDrivigs { get; set; }
     public bool IsRemoved { get; set; }= false;
-    public  ICollection<BisnesCoachs> BisnesCoachs { get; set; }
+    public  BisnesCoachs BisnesCoachs { get; set; }
     }
 }

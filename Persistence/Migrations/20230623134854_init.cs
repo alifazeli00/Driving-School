@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class initq : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,6 +27,8 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Family = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodeMeli = table.Column<int>(type: "int", nullable: false),
@@ -140,7 +142,8 @@ namespace Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BisnesCoachs_CoachsId",
                 table: "BisnesCoachs",
-                column: "CoachsId");
+                column: "CoachsId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BisnesCoachs_UsersId",

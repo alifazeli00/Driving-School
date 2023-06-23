@@ -10,8 +10,11 @@ namespace Domain.User
     public class Users
     {
         public int Id { get; set; }
+        public string UserName { get; set; }
+        public string Phone { get; set; }
         public  string Name { get; set; }
         public string Family { get; set; }
+    
         public int CodeMeli { get; set; }
 
         public bool StatosCoachs { get; set; }= false; //malom she ke morabi dare ya na

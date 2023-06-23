@@ -34,7 +34,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoachsId");
+                    b.HasIndex("CoachsId")
+                        .IsUnique();
 
                     b.HasIndex("UsersId");
 
@@ -163,8 +164,14 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("StatosCoachs")
                         .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -174,8 +181,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Coach.BisnesCoachs", b =>
                 {
                     b.HasOne("Domain.Coach.Coachs", "Coachs")
-                        .WithMany("BisnesCoachs")
-                        .HasForeignKey("CoachsId")
+                        .WithOne("BisnesCoachs")
+                        .HasForeignKey("Domain.Coach.BisnesCoachs", "CoachsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
