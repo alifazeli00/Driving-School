@@ -1,4 +1,5 @@
 ﻿using Application.Context;
+using Application.Dtos;
 using Domain.User;
 using MediatR;
 using System;
@@ -23,7 +24,7 @@ namespace Application.User.Commands
     // prop haii ke bayad daryaft koni
 
     //in class reqest mas 
-    public class RejesterUserCommand:IRequest<RejesterUserResponseDto> //inchiziebargashtmidi
+    public class RejesterUserCommand:IRequest<BaseDto> //inchiziebargashtmidi
     {
         public RejesterUserCommand(RejesterUserDto RejesterUserDto)
         {
@@ -36,7 +37,7 @@ namespace Application.User.Commands
     }
 
     // in yek requset migire
-    public class RejesterUserHandler : IRequestHandler<RejesterUserCommand, RejesterUserResponseDto>
+    public class RejesterUserHandler : IRequestHandler<RejesterUserCommand, BaseDto>
     {
         private readonly IDataBaceContext context;
 
@@ -45,9 +46,14 @@ namespace Application.User.Commands
             this.context = context;
         }
 
-        public Task<RejesterUserResponseDto> Handle(RejesterUserCommand request, CancellationToken cancellationToken)
+        public Task<BaseDto> Handle(RejesterUserCommand request, CancellationToken cancellationToken)
         {
             // bisnes ma injas 
+            var Chek=context.Users.Where(p=>p.Phone==request.RejesterUserDto.Phone).FirstOrDefault();
+            if(Chek!=null)
+            {
+                return Task.FromResult(new BaseDto { IsSuccess = false, Messeges = "Sabt NamShodi" });
+            };
             Users x= new Users()
             {
                 Name = request.RejesterUserDto.Name,
@@ -57,7 +63,7 @@ namespace Application.User.Commands
             };
         var res=    context.Users.Add(x);context.SaveChanges();
 
-            return Task.FromResult(new RejesterUserResponseDto() { Phone=res.Entity.Phone,UserName=res.Entity.UserName});
+            return Task.FromResult(new BaseDto() { IsSuccess=true,Messeges=""});
           
 
 

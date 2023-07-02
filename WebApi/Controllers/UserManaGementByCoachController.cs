@@ -18,6 +18,10 @@ namespace WebApi.Controllers
 
 
         // tamom hsodan amali
+        /// <summary>
+        /// tamom shodan amozesh amali
+        /// </summary>
+        /// <param name="Req"></param>
         [HttpPost]
         public void FinishLerningAmali([FromBody] FinishLerningDto Req)
         {

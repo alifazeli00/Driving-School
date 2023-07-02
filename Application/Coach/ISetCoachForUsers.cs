@@ -33,6 +33,8 @@ namespace Application.Coach
         public List<GetBisnesUsersDto> Get()
         {
             var res = context.BisnesUsers.Include(p => p.DatesDrivigs).ThenInclude(p => p.Coachs).Include(p => p.Users).
+                // agar talimish tamom shode bod  in statos ha falsean va dige neshon nemide
+                Where(p=>p.DatesDrivigs.Status==false).
                 Select(p => new GetBisnesUsersDto
                 {
 
@@ -46,6 +48,7 @@ namespace Application.Coach
 
         public GetBisnesUsersDto GetById(int UserId)
         {
+            // in shart khasi nadarae nemidoam chera neveshtam -_-
             var res = context.BisnesUsers.Include(p => p.DatesDrivigs).ThenInclude(p => p.Coachs).Include(p => p.Users).
                   Where(p=>p.UsersId==UserId).  Select(p => new GetBisnesUsersDto
                     {
@@ -61,26 +64,43 @@ namespace Application.Coach
 
         public BaseDto<int> Set(BisnesCoachsDto Req)
         {
-            BisnesCoachs x = new BisnesCoachs()
+            var coach = context.DatesDrivigs.Where(p => p.Id == Req.DatesDrivigId).FirstOrDefault();
+            var BisnesCoachs = context.BisnesCoachs.Where(p => p.CoachsId == coach.CoachsId && p.UsersId == Req.UserId).FirstOrDefault();
+            if (BisnesCoachs == null)
             {
-                CoachsId=Req.coachId,
-            //    DatesDrivigsId=Req.DatesDrivigId,
-                UsersId=Req.UserId,
-             
-            };
-            BisnesUsers c = new BisnesUsers()
-            {
-                DatesDrivigsId = Req.DatesDrivigId,
-                UsersId = Req.UserId,
+                BisnesCoachs x = new BisnesCoachs()
+                {
 
-            };
-            context.BisnesCoachs.Add(x);
-            context.BisnesUsers.Add(c);
-            context.SaveChanges();
+                    CoachsId = coach.CoachsId,
+                    //    DatesDrivigsId=Req.DatesDrivigId,
+                    UsersId = Req.UserId,
+
+                };
+                context.BisnesCoachs.Add(x);
+            }
+          
+            var bisnesUser = context.BisnesUsers.Where(p => p.UsersId == Req.UserId).FirstOrDefault();
+            if (bisnesUser == null)
+            {
+                BisnesUsers c = new BisnesUsers()
+                {
+                    DatesDrivigsId = Req.DatesDrivigId,
+                    UsersId = Req.UserId,
+
+                };
+                context.BisnesUsers.Add(c);
+            }
+            else
+            {
+                bisnesUser.DatesDrivigsId = Req.DatesDrivigId;
+            }
+
+   
+                context.SaveChanges();
             var res = context.Users.Where(p => p.Id == Req.UserId).SingleOrDefault();
             var StatusDates = context.DatesDrivigs.Where(p => p.Id == Req.DatesDrivigId).SingleOrDefault();
             StatusDates.Status = true; //rezerv shode bara user  ya na bara report bekaret mid bad tedad karamoza m igiri
-            res.StatosCoachs = true; // yani badan molaom she ke in morabi dare
+         //   res.StatosCoachs = true; // yani badan molaom she ke in morabi dare
             context.SaveChanges();
 
             return new BaseDto<int>
@@ -96,14 +116,14 @@ namespace Application.Coach
     {
         public int UserId { get; set; }
         public int DatesDrivigId { get; set; }
-        public int coachId { get; set; }
+    //    public int coachId { get; set; }
 
     }
         public class GetBisnesUsersDto
     {
         public int UserId { get; set; }
         public  string NameUser { get; set; }
-        public int DatesDrivigId { get; set; }
+        public int? DatesDrivigId { get; set; }
         public string NameCoaches { get; set; }
 
     }

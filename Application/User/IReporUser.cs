@@ -37,7 +37,7 @@ namespace Application.User
         public BaseDto<coachNullDto> coachNull()
         {
 
-            var res = context.BisnesUsers.Include(p=>p.Users).Where(p => p.StatusLerningAmali == false && p.StatusLerningAiname == true)
+            var res = context.BisnesUsers.Include(p=>p.Users).Where(p => p.StatusLerningAmali == false && p.StatusLerningAiname == true && p.StatusAiname==false)
              .Select(p=>new coachNullDto()
              {
                  Family=p.Users.Family,

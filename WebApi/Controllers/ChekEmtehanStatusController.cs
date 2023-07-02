@@ -14,6 +14,10 @@ namespace WebApi.Controllers
             this.chekAiname=chekAiname;
 
         }
+        /// <summary>
+        /// List karamoz haii ke  ghabol shodan
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetSucsesAiname()
         {

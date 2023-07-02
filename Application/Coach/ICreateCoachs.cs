@@ -57,6 +57,12 @@ namespace Application.Coach
             //context.SaveChanges();
 
 
+   
+            var res = context.Coachs.Where(p => p.Phone == Req.Phone).FirstOrDefault();
+            if(res != null)
+            {
+                return new BaseDto<int> { IsSuccess = false, Messeges = "Mojod ast", Exist = res.Id };
+            }
 
             Coachs x = new Coachs()
             {
@@ -142,7 +148,7 @@ namespace Application.Coach
         public string Name { get; set; } 
     
         public ImageDto Image { get; set; }
-    
+    public string Phone { get; set; }
 
 
 

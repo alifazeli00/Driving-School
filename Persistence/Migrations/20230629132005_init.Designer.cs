@@ -10,7 +10,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataBaceContext))]
-    [Migration("20230623134854_init")]
+    [Migration("20230629132005_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,6 +112,50 @@ namespace Persistence.Migrations
                     b.ToTable("DatesDrivigs");
                 });
 
+            modelBuilder.Entity("Domain.Dates.DatesTeory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DatesTeory");
+                });
+
+            modelBuilder.Entity("Domain.Dates.ListDatesTeory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DatesTeoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameTeacher")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Subject")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DatesTeoryId");
+
+                    b.ToTable("ListDatesTeory");
+                });
+
             modelBuilder.Entity("Domain.User.BisnesUsers", b =>
                 {
                     b.Property<int>("Id")
@@ -119,7 +163,7 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DatesDrivigsId")
+                    b.Property<int?>("DatesDrivigsId")
                         .HasColumnType("int");
 
                     b.Property<bool>("StatusAiname")
@@ -139,7 +183,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatesDrivigsId");
+                    b.HasIndex("DatesDrivigsId")
+                        .IsUnique()
+                        .HasFilter("[DatesDrivigsId] IS NOT NULL");
 
                     b.HasIndex("UsersId")
                         .IsUnique();
@@ -155,6 +201,9 @@ namespace Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CodeMeli")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DatesTeoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Family")
@@ -176,6 +225,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DatesTeoryId");
 
                     b.ToTable("Users");
                 });
@@ -221,13 +272,22 @@ namespace Persistence.Migrations
                     b.Navigation("Coachs");
                 });
 
+            modelBuilder.Entity("Domain.Dates.ListDatesTeory", b =>
+                {
+                    b.HasOne("Domain.Dates.DatesTeory", "DatesTeory")
+                        .WithMany("ListDatesTeory")
+                        .HasForeignKey("DatesTeoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DatesTeory");
+                });
+
             modelBuilder.Entity("Domain.User.BisnesUsers", b =>
                 {
                     b.HasOne("Domain.Dates.DatesDrivigs", "DatesDrivigs")
-                        .WithMany()
-                        .HasForeignKey("DatesDrivigsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("BisnesUsers")
+                        .HasForeignKey("Domain.User.BisnesUsers", "DatesDrivigsId");
 
                     b.HasOne("Domain.User.Users", "Users")
                         .WithOne("BisnesUsers")
@@ -240,11 +300,30 @@ namespace Persistence.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("Domain.User.Users", b =>
+                {
+                    b.HasOne("Domain.Dates.DatesTeory", null)
+                        .WithMany("users")
+                        .HasForeignKey("DatesTeoryId");
+                });
+
             modelBuilder.Entity("Domain.Coach.Coachs", b =>
                 {
                     b.Navigation("BisnesCoachs");
 
                     b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("Domain.Dates.DatesDrivigs", b =>
+                {
+                    b.Navigation("BisnesUsers");
+                });
+
+            modelBuilder.Entity("Domain.Dates.DatesTeory", b =>
+                {
+                    b.Navigation("ListDatesTeory");
+
+                    b.Navigation("users");
                 });
 
             modelBuilder.Entity("Domain.User.Users", b =>

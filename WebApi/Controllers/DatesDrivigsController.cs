@@ -16,6 +16,10 @@ namespace WebApi.Controllers
 
         }
         // GET: api/<DatesDrivigsController>
+        /// <summary>
+        /// List tarikh lerningamali  ke taiin vaziat nashodan yani karamoz nadaran
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetDatesDrivigs()
         {
@@ -25,6 +29,11 @@ namespace WebApi.Controllers
        
 
         // POST api/<DatesDrivigsController>
+        /// <summary>
+        /// Create Tarikh lerninamali
+        /// </summary>
+        /// <param name="Req"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult CreateDatesDrivigs([FromBody] CreateDatesDrivigsDto Req)
         {
@@ -35,9 +44,11 @@ namespace WebApi.Controllers
         }
 
         // PUT api/<DatesDrivigsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] EditDatesDrivigsDto Req)
         {
+            var res = DatesDrivig.Edit(Req);
+            return Ok(res);
         }
 
         // DELETE api/<DatesDrivigsController>/5

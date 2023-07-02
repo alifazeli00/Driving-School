@@ -13,7 +13,8 @@ namespace Application.ChekEmtehan
     {
         // hame ro neshon midi bad kenaresh ye chek mizari bad yani ghabol shode
         BaseDto<GetUserForInameDto> GetUserForAiname();
-        BaseDto AddUserForAiname(int UserId, bool javab);
+        //jaba ainame
+        BaseDto AddUserForAiname(List<int> UserId, bool javab);
         BaseDto<GetUserForInameDto> GetUserGhabolShodeha();
 
     }
@@ -26,22 +27,32 @@ namespace Application.ChekEmtehan
 
         }
         // jabe ainame
-        public BaseDto AddUserForAiname(int UserId, bool javab)
+        public BaseDto AddUserForAiname(List<int> UserId, bool javab)
         {
-            var res=context.BisnesUsers.Where(p => p.UsersId == UserId).FirstOrDefault();
-            res.StatusAiname = javab;
-            context.SaveChanges();
+        
+            foreach(int  item in UserId)
+            {
+                var user = context.BisnesUsers.Where(p => p.UsersId == item).SingleOrDefault();
+                user.StatusAiname = javab;
+                context.SaveChanges();
+                // kare dorostie  kho agar 100 ta bod hamash request mire bara server??
+            }
+
+           // var res=context.BisnesUsers.Where(p => p.UsersId == UserId).FirstOrDefault();
+            //res.StatusAiname = javab;
+            
             return  new BaseDto { IsSuccess=true,Messeges="" };
         }
 
         public BaseDto<GetUserForInameDto> GetUserForAiname()
         {
        
-   var res = context.BisnesUsers.Where(p => p.StatusAiname == false && p.StatusLerningAmali == true).Include(p=>p.Users).Select(p=>new GetUserForInameDto
+   var res = context.BisnesUsers.Include(p=>p.DatesDrivigs).Where(p => p.StatusAiname == false && p.StatusLerningAmali == true /*&&p.DatesDrivigs.Status==false*/).Include(p=>p.Users).Select(p=>new GetUserForInameDto
             {
        CodeMeli=p.Users.CodeMeli,
        Family=p.Users.Family,
        Name=p.Users.Name,
+       Id=p.UsersId
 
             } ).ToList();
             return new BaseDto<GetUserForInameDto> { IsSuccess = true, Messeges = "", Deta = res };
@@ -67,6 +78,6 @@ namespace Application.ChekEmtehan
         public int CodeMeli { get; set; }
         public  string Name { get; set; }
         public string Family { get; set; }
-
+        public int Id { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Coach;
+using Domain.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace Domain.Dates
           public int CoachsId { get; set; }
          public  Coachs Coachs { get; set; }
 
-
+        
+        public BisnesUsers BisnesUsers { get; set; }
 
 
         // yelist migiri migi onaii ke stats false  ro neshon bede ta  badan karamoz bedim

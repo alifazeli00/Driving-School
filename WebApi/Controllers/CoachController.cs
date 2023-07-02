@@ -19,6 +19,10 @@ namespace WebApi.Controllers
             this.CreateCoachs=CreateCoachs;
  
         }
+        /// <summary>
+        /// List Morabi ha
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetCoach()
         {
@@ -27,6 +31,11 @@ namespace WebApi.Controllers
         }
 
         // GET api/<CoachController>/5
+        /// <summary>
+        /// daryaft morabi ba shenase
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet("{Id}")]
         public  IActionResult GetCoachById(int Id)
         {
@@ -35,6 +44,11 @@ namespace WebApi.Controllers
         }
 
         // POST api/<CoachController>
+        /// <summary>
+        /// add kardan morabi
+        /// </summary>
+        /// <param name="Req"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult AddCoach([FromBody] AddDto Req)
         {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataBaceContext))]
-    partial class DataBaceContextModelSnapshot : ModelSnapshot
+    [Migration("20230629132330_init1")]
+    partial class init1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,11 +300,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.User.Users", b =>
                 {
-                    b.HasOne("Domain.Dates.DatesTeory", "DatesTeory")
+                    b.HasOne("Domain.Dates.DatesTeory", null)
                         .WithMany("users")
                         .HasForeignKey("DatesTeoryId");
-
-                    b.Navigation("DatesTeory");
                 });
 
             modelBuilder.Entity("Domain.Coach.Coachs", b =>

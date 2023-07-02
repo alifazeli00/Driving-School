@@ -24,6 +24,7 @@ namespace WebApi.Controllers
         }
         // shomare teleohone va username  migire agar  doros bod token mide 
         // felan serice  payamc ro nazadam hamin jor shomare ro gereftam
+    
         [HttpPost]
         public IActionResult Post(LoginUserDto Req)
         {
@@ -71,7 +72,10 @@ namespace WebApi.Controllers
         {
             RejesterUserCommand Rejester = new RejesterUserCommand(Req);
          var res=   mediator.Send(Rejester).Result;
-            return RedirectToAction(nameof(Post),new LoginUserDto { UserName=res.UserName,Phone=res.Phone});
+            //ham chin chizi mishe to application yani b redirect!
+            //   return RedirectToAction(nameof(Post),new LoginUserDto { UserName=res.UserName,Phone=res.Phone});
+
+            return Ok(res);
         }
 
 

@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:WebApi.Controllers.ChekEmtehanController.GetUserForAiname">
+            <summary>
+            List karamoz barai ainame
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ChekEmtehanController.AddUserainame(System.Collections.Generic.List{System.Int32},System.Boolean)">
+            <summary>
+            javab emtehan ainame
+            </summary>
+            <param name="UserId">Listi az User ha ro midi  </param>
+            <param name="javab">onake ghabol shodan mishe true ona ham nashodan ke lazem nis chon false mikone</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ChekEmtehanStatusController.GetSucsesAiname">
+            <summary>
+            List karamoz haii ke  ghabol shodan
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CoachController.GetCoach">
+            <summary>
+            List Morabi ha
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CoachController.GetCoachById(System.Int32)">
+            <summary>
+            daryaft morabi ba shenase
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CoachController.AddCoach(Application.Coach.AddDto)">
+            <summary>
+            add kardan morabi
+            </summary>
+            <param name="Req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.DatesDrivigsController.GetDatesDrivigs">
+            <summary>
+            List tarikh lerningamali  ke taiin vaziat nashodan yani karamoz nadaran
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.DatesDrivigsController.CreateDatesDrivigs(Application.DatesDrivig.CreateDatesDrivigsDto)">
+            <summary>
+            Create Tarikh lerninamali
+            </summary>
+            <param name="Req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.DatesTeorysController.Get">
+            <summary>
+            List tarikh Teory
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.DatesTeorysController.post(Application.DatesTeorys.Commands.CreateTeoryCommadRequestDto)">
+            <summary>
+            sakht list tarikh teory
+            </summary>
+            <param name="Req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.DatesTeorysController.UserAddTeory(System.Int32,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            add kardan karamoz be teory
+            </summary>
+            <param name="DatesTeoryId"> shenase tarikh teory</param>
+            <param name="Users"> list Id user ha</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.GetListUserController.GetSucsesAiname">
+            <summary>
+            list ghabol shodegan ainame
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.reportCoachController.GetDateDrivigCoach(System.Int32)">
+            <summary>
+            List tarikh drivinh har morabi ke hanoz tamom nashodan
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.reportCoachCountController.CountLerningForCoach(System.Int32)">
+            <summary>
+            tedad karamoz haiye  morabi  ke tamom nashodan
+            </summary>
+            <param name="CoachId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.SetCoachForUsersController.SetUserForCoach(Application.Coach.BisnesCoachsDto)">
+            <summary>
+            dadan karamoz be morabi
+            </summary>
+            <param name="Req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.SetCoachForUsersController.GetUserForDrivig">
+            <summary>
+            list karamozaii ke talimidaran
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.UserManaGementByCoachController.FinishLerningAmali(Application.Coach.FinishLerningDto)">
+            <summary>
+            tamom shodan amozesh amali
+            </summary>
+            <param name="Req"></param>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.GetListTeory(System.Int32)">
+            <summary>
+            user haii ke class teori bayad bian va esmeshon sabt shode
+            </summary>
+            <param name="DatesTeoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.GetListNullTeory">
+            <summary>
+            user haii ke hanoz  esmeshon to class ainme sabt nashode 
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

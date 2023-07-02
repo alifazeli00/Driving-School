@@ -13,11 +13,13 @@ namespace Application.Context
 {
     public interface IDataBaceContext
     {
+        DbSet<ListDatesTeory> ListDatesTeory { get; set; }
         DbSet<Image> Image { get; set; }
         DbSet<Users> Users { get; set; }
         DbSet<Coachs> Coachs { get; set; }
        DbSet<DatesDrivigs> DatesDrivigs { get; set; }
         DbSet<BisnesUsers> BisnesUsers { get; set; }
+        DbSet<DatesTeory> DatesTeory { get; set; }
         DbSet<BisnesCoachs> BisnesCoachs { get; set; }
 
         int SaveChanges();

@@ -2,6 +2,8 @@ using Application.ChekEmtehan;
 using Application.Coach;
 using Application.Context;
 using Application.DatesDrivig;
+using Application.DatesTeorys.Commands;
+using Application.DatesTeorys.Queries;
 using Application.User.Commands;
 using Application.User.Queries;
 using MediatR;
@@ -20,6 +22,7 @@ using Microsoft.OpenApi.Models;
 using Persistence;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,7 +98,23 @@ namespace WebApi
             services.AddControllers();
             ////mediatr
             services.AddMediatR(typeof(RejesterUserCommand).Assembly);
-            services.AddMediatR(typeof(LoginUserHandler).Assembly);
+            services.AddMediatR(typeof(LoginUserQuerie).Assembly);
+            services.AddMediatR(typeof(GetListTeoryQueries).Assembly);
+            services.AddMediatR(typeof(CreateTeoryCommnad).Assembly);
+            services.AddMediatR(typeof(GetListNullTeoryQuerie).Assembly);
+            services.AddMediatR(typeof(UserAddTeoryCommand).Assembly);
+            services.AddMediatR(typeof(GetListTeoryQuerie).Assembly);
+            services.AddMediatR(typeof(StatusUserQuerie).Assembly);
+
+
+
+
+
+
+
+
+
+
 
             ///
             services.AddTransient<IDataBaceContext, DataBaceContext>(); 
@@ -108,6 +127,7 @@ namespace WebApi
             services.AddTransient<IDatesDrivigs,DatesDrivig>();
             services.AddSwaggerGen(c =>
             {
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "WebApi.xml"),true);
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
             });

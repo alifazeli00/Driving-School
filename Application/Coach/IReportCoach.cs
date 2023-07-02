@@ -28,14 +28,14 @@ namespace Application.Coach
 
         public int CountLerning(int CoachId)
         {
-            var res = context.DatesDrivigs.Where(p => p.CoachsId == CoachId&&p.Status==true).Count();
+            var res = context.DatesDrivigs.Where(p => p.CoachsId == CoachId&&p.Status==false).Count();
 
             return res;
         }
 
         public BaseDto<GetDateDrivig> Get(int CoachId)
         {
-            var res = context.DatesDrivigs.Where(p => p.CoachsId == CoachId)
+            var res = context.DatesDrivigs.Where(p => p.CoachsId == CoachId &&p.Status==false)
             .Include(p => p.Coachs).ThenInclude(p => p.BisnesCoachs).Include(p => p.Coachs).
             ThenInclude(p=>p.BisnesCoachs).ThenInclude(p=>p.Users).Select(p => new GetDateDrivig
             {

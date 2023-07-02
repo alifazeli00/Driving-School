@@ -22,22 +22,15 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "DatesTeory",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Family = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CodeMeli = table.Column<int>(type: "int", nullable: false),
-                    StatosCoachs = table.Column<bool>(type: "bit", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_DatesTeory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,6 +77,56 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ListDatesTeory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NameTeacher = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subject = table.Column<int>(type: "int", nullable: false),
+                    DatesTeoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ListDatesTeory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ListDatesTeory_DatesTeory_DatesTeoryId",
+                        column: x => x.DatesTeoryId,
+                        principalTable: "DatesTeory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Family = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodeMeli = table.Column<int>(type: "int", nullable: false),
+                    StatosCoachs = table.Column<bool>(type: "bit", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    DatesTeoryId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_DatesTeory_DatesTeoryId",
+                        column: x => x.DatesTeoryId,
+                        principalTable: "DatesTeory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BisnesCoachs",
                 columns: table => new
                 {
@@ -116,7 +159,7 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsersId = table.Column<int>(type: "int", nullable: false),
-                    DatesDrivigsId = table.Column<int>(type: "int", nullable: false),
+                    DatesDrivigsId = table.Column<int>(type: "int", nullable: true),
                     StatusAiname = table.Column<bool>(type: "bit", nullable: false),
                     StatusAmali = table.Column<bool>(type: "bit", nullable: false),
                     StatusLerningAmali = table.Column<bool>(type: "bit", nullable: false),
@@ -130,7 +173,7 @@ namespace Persistence.Migrations
                         column: x => x.DatesDrivigsId,
                         principalTable: "DatesDrivigs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BisnesUsers_Users_UsersId",
                         column: x => x.UsersId,
@@ -153,7 +196,9 @@ namespace Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BisnesUsers_DatesDrivigsId",
                 table: "BisnesUsers",
-                column: "DatesDrivigsId");
+                column: "DatesDrivigsId",
+                unique: true,
+                filter: "[DatesDrivigsId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BisnesUsers_UsersId",
@@ -171,6 +216,16 @@ namespace Persistence.Migrations
                 table: "Image",
                 column: "CoachsId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ListDatesTeory_DatesTeoryId",
+                table: "ListDatesTeory",
+                column: "DatesTeoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_DatesTeoryId",
+                table: "Users",
+                column: "DatesTeoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -185,6 +240,9 @@ namespace Persistence.Migrations
                 name: "Image");
 
             migrationBuilder.DropTable(
+                name: "ListDatesTeory");
+
+            migrationBuilder.DropTable(
                 name: "DatesDrivigs");
 
             migrationBuilder.DropTable(
@@ -192,6 +250,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Coachs");
+
+            migrationBuilder.DropTable(
+                name: "DatesTeory");
         }
     }
 }

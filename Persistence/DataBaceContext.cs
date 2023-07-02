@@ -17,6 +17,8 @@ namespace Persistence
         {
 
         }
+        public DbSet<ListDatesTeory> ListDatesTeory { get; set; }   
+        public DbSet<DatesTeory> DatesTeory { get; set; }
 
     public   DbSet<Coachs> Coachs { get; set; }
         public DbSet<BisnesCoachs> BisnesCoachs { get; set; }
@@ -44,8 +46,10 @@ namespace Persistence
             //  .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") != false);
             builder.Entity<Users>().HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
             builder.Entity<Coachs>().HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
-            builder.Entity<DatesDrivigs>().HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
+            // builder.Entity<DatesTeory>()
 
+//            builder.Entity<DatesTeory>().HasOne(d => d.DatesTeoryy) .WithMany(d=>d.DatesTeoryS).OnDelete(DeleteBehavior.NoAction);  
+      //.WillCascadeOnDelete(false);
         }
     }
 }

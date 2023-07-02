@@ -28,13 +28,6 @@ namespace Application.Coach
         {
          var res= context.BisnesUsers.Where(p=>p.UsersId==Req.UserId).FirstOrDefault();
             var statusforEnddates=context.DatesDrivigs.Where(p=>p.CoachsId==Req.CoachId).FirstOrDefault();
-            if(Req.StatusLerningAmali == true)
-            {
-                //bara report estefade mishe  badan migim onai ke trus hastan yani ye list migirim az kassai ke 
-                //dar hal hazer daran amozesh miran
-                statusforEnddates.Status = false;
-            }
-         
             res.StatusLerningAmali = Req.StatusLerningAmali;
             context.SaveChanges();
         }

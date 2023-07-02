@@ -13,7 +13,11 @@ namespace WebApi.Controllers
         {
             this.ReportCoach = ReportCoach; 
 
-        }
+        }/// <summary>
+        /// tedad karamoz haiye  morabi  ke tamom nashodan
+        /// </summary>
+        /// <param name="CoachId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult CountLerningForCoach(int CoachId)
         {

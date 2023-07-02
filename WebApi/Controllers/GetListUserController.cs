@@ -15,7 +15,10 @@ namespace WebApi.Controllers
 
         }
 
-
+        /// <summary>
+        /// list ghabol shodegan ainame
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetSucsesAiname()
         {

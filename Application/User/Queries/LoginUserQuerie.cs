@@ -29,11 +29,11 @@ namespace Application.User.Queries
     }
 
 
-    public class LoginUserHandler : IRequestHandler<LoginUserQuerie, BaseDto<UserDto>>
+    public class LoginUserQuerieHandler : IRequestHandler<LoginUserQuerie, BaseDto<UserDto>>
     {
         private readonly IDataBaceContext context;
 
-        public LoginUserHandler(IDataBaceContext context)
+        public LoginUserQuerieHandler(IDataBaceContext context)
         {
             this.context = context;
         }

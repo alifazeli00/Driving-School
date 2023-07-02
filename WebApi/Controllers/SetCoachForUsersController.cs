@@ -15,18 +15,24 @@ namespace WebApi.Controllers
 
         }
 
-
+        /// <summary>
+        /// dadan karamoz be morabi
+        /// </summary>
+        /// <param name="Req"></param>
+        /// <returns></returns>
         [HttpPost()]
         public IActionResult SetUserForCoach([FromBody] BisnesCoachsDto Req)
         {
             var res = SetCoachForUsers.Set(Req);
 
-            string url = Url.Action(nameof(GetBisnesUsersById), "Coach", new { Id = res.Exist }, Request.Scheme);
-
+            string url = "";
             return Created(url, res);
         }
-
-        [HttpGet()]
+        /// <summary>
+        /// list karamozaii ke talimidaran
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult GetUserForDrivig()
         {
             var res = SetCoachForUsers.Get();
