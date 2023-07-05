@@ -1,6 +1,7 @@
 ﻿using Application.Context;
 using Domain.Coach;
 using Domain.Dates;
+using Domain.Sms.Account;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,6 +18,7 @@ namespace Persistence
         {
 
         }
+       public DbSet<SmsCode> SmsCode { get; set; }
         public DbSet<ListDatesTeory> ListDatesTeory { get; set; }   
         public DbSet<DatesTeory> DatesTeory { get; set; }
 

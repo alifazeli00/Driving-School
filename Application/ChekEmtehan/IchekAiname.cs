@@ -1,5 +1,7 @@
 ﻿using Application.Context;
 using Application.Dtos;
+using Application.Notification.Command;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,21 +23,37 @@ namespace Application.ChekEmtehan
     public class chekAiname : IchekAiname
     {
         private readonly IDataBaceContext context;
-        public chekAiname(IDataBaceContext context)
+        private readonly IPublisher publisher; 
+        public chekAiname(IDataBaceContext context, IPublisher publisher)
         {
             this .context = context;    
+            this.publisher = publisher;
 
         }
         // jabe ainame
+        //faghat oanii ke ghbol shodn
         public BaseDto AddUserForAiname(List<int> UserId, bool javab)
         {
-        
+        // inja az mediatr estefade nashod chon az ghabl service haro neveshtam
+
+           
+            //masan inja lazeme ke  chek koni bebini id ke mide eshtb nabashe yani false bashe
             foreach(int  item in UserId)
             {
                 var user = context.BisnesUsers.Where(p => p.UsersId == item).SingleOrDefault();
-                user.StatusAiname = javab;
+                if(user.StatusAiname==false)
+                {
+                    user.StatusAiname = javab;
+                    publisher.Publish(new SmsStatusAinameEvent { userId = item });
+
+                }
+            
                 context.SaveChanges();
+             
                 // kare dorostie  kho agar 100 ta bod hamash request mire bara server??
+
+
+
             }
 
            // var res=context.BisnesUsers.Where(p => p.UsersId == UserId).FirstOrDefault();

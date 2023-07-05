@@ -105,6 +105,7 @@ namespace WebApi
             services.AddMediatR(typeof(UserAddTeoryCommand).Assembly);
             services.AddMediatR(typeof(GetListTeoryQuerie).Assembly);
             services.AddMediatR(typeof(StatusUserQuerie).Assembly);
+            services.AddMediatR(typeof(SaveSmsCodeCommand).Assembly);
 
 
 

@@ -24,6 +24,7 @@ namespace WebApi.Controllers
         {
             var res = ReportCoach.Get(CoachId);
             return Ok(res);
+
         }
 
         // TEDAD KARAMOZ HAI KE MORABI DARE

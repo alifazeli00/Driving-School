@@ -78,8 +78,18 @@ namespace WebApi.Controllers
             return Ok(res);
         }
 
+        [Route("GetSms")]
+     [HttpGet]
+     public IActionResult GetSms(string Phone)
+        {
+            SaveSmsCodeCommand x = new SaveSmsCodeCommand(Phone);
+            var code = mediator.Send(x).Result;
+            //
+            //  ersal payamak
+            //
+            return Ok();
 
-
+        }
 
 
 

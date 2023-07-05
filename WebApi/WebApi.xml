@@ -78,12 +78,6 @@
             <param name="Users"> list Id user ha</param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Controllers.GetListUserController.GetSucsesAiname">
-            <summary>
-            list ghabol shodegan ainame
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:WebApi.Controllers.reportCoachController.GetDateDrivigCoach(System.Int32)">
             <summary>
             List tarikh drivinh har morabi ke hanoz tamom nashodan

@@ -1,5 +1,6 @@
 ﻿using Domain.Coach;
 using Domain.Dates;
+using Domain.Sms.Account;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +17,7 @@ namespace Application.Context
         DbSet<ListDatesTeory> ListDatesTeory { get; set; }
         DbSet<Image> Image { get; set; }
         DbSet<Users> Users { get; set; }
+        DbSet<SmsCode> SmsCode { get; set; }
         DbSet<Coachs> Coachs { get; set; }
        DbSet<DatesDrivigs> DatesDrivigs { get; set; }
         DbSet<BisnesUsers> BisnesUsers { get; set; }

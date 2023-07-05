@@ -3,6 +3,7 @@ using Application.Dtos;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,7 +13,11 @@ namespace Application.User.Queries
 {
     public class LoginUserDto
     {
-        public string UserName { get; set; }
+        [Required] [MinLength(5)] [MaxLength(5)]
+
+        public string Code { get; set; }
+        [Required]
+        [RegularExpression(@"(\+98|0)?9\d{9}")] // yanai ya ba +98 shoro se ya ba 0
         public string Phone { get; set; } 
 
     }
@@ -40,19 +45,41 @@ namespace Application.User.Queries
 
         public Task<BaseDto<UserDto>> Handle(LoginUserQuerie request, CancellationToken cancellationToken)
         {
-            var res = context.Users.Where(p => p.UserName == request.LoginUserDto.UserName).Select(p=>new UserDto
+            var res = context.Users.Where(p => p.Phone == request.LoginUserDto.Phone).Select(p => new UserDto
             {
                 UserName = p.UserName,
-                Phone= p.Phone
+                Phone = p.Phone
             }).FirstOrDefault();
-            if(res == null)
+            if (res == null)
             {
                 return Task.FromResult(new BaseDto<UserDto> { IsSuccess = false, Messeges = "SABT NAM KONID" });
+            };
+
+            var SmsCode = context.SmsCode.Where(p => p.Code == request.LoginUserDto.Code && p.Phone == request.LoginUserDto.Phone).FirstOrDefault();
+
+            if (SmsCode == null)
+            {
+
+                return Task.FromResult(new BaseDto<UserDto> { IsSuccess = false, Messeges = "code eshteba" }); 
             }
             else
             {
-                return Task.FromResult(new BaseDto<UserDto> { IsSuccess = true, Messeges = "" ,Exist=res});
-            }
+                if(SmsCode.Used==true)
+                {
+                    return Task.FromResult(new BaseDto<UserDto> { IsSuccess = false, Messeges = "code eshteba" }); ;
+                }
+                //
+                //time
+                //
+                
+                SmsCode.ReqCount++;
+                SmsCode.Used = true;
+                context.SaveChanges();
+            };
+
+            return Task.FromResult(new BaseDto<UserDto> { IsSuccess = true, Messeges = "", Exist = res });
+
+
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Application.Context;
+using Application.Notification.Command;
 using Domain.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -36,29 +37,36 @@ namespace Application.DatesTeorys.Commands
     public class UserAddTeoryCommandHandler : IRequestHandler<UserAddTeoryCommand, int>
     {
         private readonly IDataBaceContext context;
+        private readonly IPublisher publisher;
 
-        public UserAddTeoryCommandHandler(IDataBaceContext context)
+      
+
+
+        public UserAddTeoryCommandHandler(IDataBaceContext context,IPublisher publisher)
         {
             this.context = context;
+            this.publisher = publisher;
         }
 
         public Task<int> Handle(UserAddTeoryCommand request, CancellationToken cancellationToken)
         {
+          var res = context.ListDatesTeory.Include(p => p.DatesTeory).ThenInclude(p => p.users).Where(p => p.DatesTeoryId == request.DatesTeoryId).FirstOrDefault();
+
             //yani onaii ke ad shodan ro  trye mikonim ham add mikon
 
             //  var a = context.Users.Where(p => p.Id.Equals(request.Userr)).ToList();
-            List<Users> User = new List<Users>();
+            List<Users> Users = new List<Users>();
 
             foreach (var c in request.Userr)
             {
-                var status=       context.Users.Where(p => p.Id == c).Include(d => d.BisnesUsers).SingleOrDefault();
+                var User= context.Users.Where(p => p.Id == c).Include(d => d.BisnesUsers).SingleOrDefault();
           
-                if(status.BisnesUsers==null)
+                if(User.BisnesUsers==null)
                 {
 
                     BisnesUsers f = new BisnesUsers()
                     {
-                        UsersId = status.Id,
+                        UsersId = User.Id,
                   
                         
 
@@ -66,17 +74,20 @@ namespace Application.DatesTeorys.Commands
                     context.BisnesUsers.Add(f);
                     context.SaveChanges();
                 }
-                
-                status.BisnesUsers.StatusLerningAiname = true;
+
+                User.BisnesUsers.StatusLerningAiname = true;
               //  c.BisnesUsers.StatusLerningAiname = true;
                 //  var a = context.Users.Where(p => p.Id.Equals(request.Userr)).ToList();
                 context.SaveChanges();  
-                User.Add(status);
+                Users.Add(User);
+               // braye time : bayad  sata shoro va tarikh ro bedim ke payam bere vasash
+                publisher.Publish(new SmsLerningTeoryEvent { UserId = User.Id,Time=res.Date });
             };
            // var Users = context.Users.Include(p => p.BisnesUsers).Where(p => p.Id.Equals(request.Userr)  ).ToList();
             //beja in id DatesTeoryId in ro bas bezari
-            var res = context.ListDatesTeory.Include(p=>p.DatesTeory).ThenInclude(p=>p.users).Where(p => p.DatesTeoryId == request.DatesTeoryId   ).FirstOrDefault();
-            res.DatesTeory.users = User;
+           
+            res.DatesTeory.users = Users;
+        
             context.SaveChanges();
             return Task.FromResult(1);
         }
