@@ -11,6 +11,8 @@ namespace Domain.Coach
     public class Coachs
     {
     public int Id { get; set; }
+
+        public int dddddtest { get; set; }
     public string Name { get; set; }
     public string Phone { get; set; }
    // public  int  History { get; set; } 
